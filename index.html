@@ -29,11 +29,6 @@
             position: relative;
             z-index: 1; /* Place the content above the background */
         }
- {
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-        }
 
         .container {
             position: relative;
@@ -46,77 +41,67 @@
             height: 75px;
             pointer-events: none; /* Allows the mouse to interact with elements behind the image */
         }
-         margin: 0;
-      overflow: hidden;
-    }
-
-    .lower-right {
-      position: fixed;
-      bottom: 0;
-      right: 0;
-    }
     </style>
-<script>
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
-    var follower = document.getElementById('follower');
-    var speed = 2; // Adjust the speed of movement
-    var intervalId;
+            var follower = document.getElementById('follower');
+            var speed = 2; // Adjust the speed of movement
+            var intervalId;
 
-    document.addEventListener('mousemove', function (e) {
-        clearInterval(intervalId); // Clear the previous interval
+            document.addEventListener('mousemove', function (e) {
+                clearInterval(intervalId); // Clear the previous interval
 
-        var mouseX = e.clientX;
-        var mouseY = e.clientY;
+                var mouseX = e.clientX;
+                var mouseY = e.clientY;
 
-        function moveTowardsCursor() {
-            var followerRect = follower.getBoundingClientRect();
-            var followerX = followerRect.left + followerRect.width / 2;
-            var followerY = followerRect.top + followerRect.height / 2;
+                function moveTowardsCursor() {
+                    var followerRect = follower.getBoundingClientRect();
+                    var followerX = followerRect.left + followerRect.width / 2;
+                    var followerY = followerRect.top + followerRect.height / 2;
 
-            var deltaX = mouseX - followerX;
-            var deltaY = mouseY - followerY;
+                    var deltaX = mouseX - followerX;
+                    var deltaY = mouseY - followerY;
 
-            var distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                    var distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-            if (distance > speed) {
-                var angle = Math.atan2(deltaY, deltaX);
-                var newX = followerX + speed * Math.cos(angle);
-                var newY = followerY + speed * Math.sin(angle);
+                    if (distance > speed) {
+                        var angle = Math.atan2(deltaY, deltaX);
+                        var newX = followerX + speed * Math.cos(angle);
+                        var newY = followerY + speed * Math.sin(angle);
 
-                follower.style.left = newX - followerRect.width / 2 + 'px';
-                follower.style.top = newY - followerRect.height / 2 + 'px';
-            } else {
-                clearInterval(intervalId);
-            }
+                        follower.style.left = newX - followerRect.width / 2 + 'px';
+                        follower.style.top = newY - followerRect.height / 2 + 'px';
+                    } else {
+                        clearInterval(intervalId);
+                        got(); // Call the got() function when the follower is close enough
+                    }
+                }
+
+                // Set up an interval to keep moving towards the cursor
+                intervalId = setInterval(moveTowardsCursor, 16); // Adjust the interval duration as needed
+            });
+        });
+
+        function got() {
+           window.open("popup.html", "_blank", "width=400, height=300");
+            // Add your custom logic or code here
         }
 
-        // Set up an interval to keep moving towards the cursor
-        intervalId = setInterval(moveTowardsCursor, 16); // Adjust the interval duration as needed
-    });
-
-   // document.addEventListener('mouseleave', function () {
-      //  clearInterval(intervalId); // Stop movement when mouse leaves the window
-   // });
-});
-function start() {
-      window.open("popup.html", "_blank", "width=400, height=300");
-      // Replace URLs and dimensions as needed
-    }
+         // Replace URLs and dimensions as needed
+        
     </script>
-
-    <title>Windows Backround WITH DUCK</title>
+    <title>Windows Background WITH DUCK</title>
 </head>
 <body>
-<div class="container">
-        <img src="follow.jpg" alt="Follow Me" id="follower">
+    <div class="container">
+        <img src="follow.jpg" alt="Follow Me" id="follower" style="left: 168.231px; top: 450.265px;">
     </div>
     <div id="background-container">
         <img id="background-image" src="windows.jpg" alt="Background Image">
     </div>
 
     <div id="content">
-       <button onclick="start()">Start!</button>
+   
     </div>
-
 </body>
 </html>
